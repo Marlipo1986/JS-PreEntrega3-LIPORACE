@@ -1,10 +1,10 @@
-
+import { comandarPlato } from "./comandas.js"
 
 
 const divPlatos = document.getElementById("platos")
 const divPedidos = document.getElementById("pedidos")
 
-let platosDisponibles = JSON.parse(localStorage.getItem("platos"))
+export let platosDisponibles = JSON.parse(localStorage.getItem("platos"))
 
 document.addEventListener("DOMContentLoaded",() => {
     generarCardsPlatos(platosDisponibles)
@@ -33,7 +33,7 @@ export const generarCardsPlatos = (platos) => {
         divPlatos.appendChild(card);
 
         const btnComprar = document.getElementById(`boton${plato.id}`)
-        btnComprar.addEventListener("click", () => console.log("funciona"))
+        btnComprar.addEventListener("click", () => comandarPlato(id))
 
     });
 };

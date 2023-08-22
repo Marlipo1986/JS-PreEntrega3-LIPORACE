@@ -1,3 +1,4 @@
+import { platos } from "../db/platos.js";
 import { platosDisponibles } from "./main.js";
 
 JSON.parse(sessionStorage.getItem("comandas")) === null && sessionStorage.setItem("comandas", JSON.stringify([]));
@@ -9,6 +10,18 @@ document.addEventListener("DOMContentLoaded",() => {
 let comandas = JSON.parse(sessionStorage.getItem("comandas")) === [];
 const listaComandas = document.getElementById("items");
 const footComandas = document.getElementById("totales");
+const btnComandas = document.getElementById("btnComandas");
+const comandasTable = document.getElementById("comandas");
+
+btnComandas.addEventListener("click", () => {
+    if(comandasTable.style.display ==="block") {
+        comandasTable.style.display = "none";
+    }else{
+        comandas.Table.display = "block";
+        dibujarComandas()
+    }
+})
+
 
 export const comandarPlato = (idPlato) => {
     
@@ -16,7 +29,7 @@ export const comandarPlato = (idPlato) => {
 
     const { nombre, precio, imagen, id} = plato;
 
-    const platoComandas = comandas.find((plato) => plato.id ===idPlato);
+    const platoComandas = platos.find((plato) => plato.id ===idPlato);
 
     if(platoComandas === undefined){
         const nuevoPlatoComandas = {
@@ -29,9 +42,9 @@ export const comandarPlato = (idPlato) => {
         comandas.push(nuevoPlatoComandas)
         sessionStorage.setItem("comandas",JSON.stringify(comandas))
     }else{
-        const indexPlatoComandas = comandas.findIndex((plato) => plato.id === idPlato)
-        comandas[indexPlatoComandas].cantidad++
-        comandas[indexPlatoComandas].precio = precio * comandas[indexPlatoComandas].cantidad
+        const indexPlatoComandas = platos.findIndex((plato) => plato.id === idPlato)
+        platos[indexPlatoComandas].cantidad++
+        platos[indexPlatoComandas].precio = precio * platos[indexPlatoComandas].cantidad
 
         sessionStorage.setItem("comandas",JSON.stringify(comandas))
     }
@@ -42,7 +55,11 @@ export const comandarPlato = (idPlato) => {
 
 const dibujarComandas = () => {
 
-    comandas.forEach(plato => {
+    platos.forEach(element => {
+        
+    });(plato => {
+        
+        listaComandas.innerHTML = ''
         
         const { imagen, nombre, cantidad, precio, id } = plato;
 
@@ -74,7 +91,63 @@ const dibujarComandas = () => {
 
     dibujarFooter()
 
-    const dibujarFooter = () =>{
-        if()
+    const dibujarFooter = () => {
+        if(comandas.length >0) {
+            footComandas.innerHTML = ""
+
+            let footer = document.createElement("tr")
+
+            footer.innerHTML = `
+            <th><b>Totales: </b></th>
+            <td></td>
+            <td>${generarTotales().cantidadTotal}</td>
+            <td></td>
+            <td>${generarTotales().costoTotal}</td>
+            `
+
+            footComandas.append(footer)
+        }else{
+            footComandas.innerHTML = "<h3>No hay platos pendientes de ordenar</h3>"
+        }
     }
+}
+
+const generarTotales = () => {
+    const costoTotal = comdandas.reduce((total, { precio }) => total + precio, 0)
+    const cantidadTotal = comandas.reduce((total, {cantidad}) => total + cantidad, 0)
+
+    return {
+        costoTotal: costoTotal,
+        cantidadTotal: cantidadTotal
+    }
+}
+
+const aumentarCantidad = (id) => {
+    const indexProductoComandas = Comandas.findIndex((producto) => producto.id === id)
+    const precio = Comandas[indexProductoComandas].precio / Comandas[indexProductoComandas].cantidad
+
+    Comandas[indexProductoComandas].cantidad++
+    Comandas[indexProductoComandas].precio = precio*Comandas[indexProductoComandas].cantidad
+
+    sessionStorage.setItem("Comandas", JSON.stringify(Comandas))
+    dibujarComandas()
+
+}
+
+const restarCantidad = (id) => {
+    const indexProductoComandas = Comandas.findIndex((producto) => producto.id === id)
+    const precio = Comandas[indexProductoComandas].precio / Comandas[indexProductoComandas].cantidad
+
+    Comandas[indexProductoComandas].cantidad--
+    Comandas[indexProductoComandas].precio = precio*Comandas[indexProductoComandas].cantidad
+
+    if(Comandas[indexProductoComandas].cantidad === 0){
+        Comandas.splice(indexProductoComandas, 1)
+    }
+
+    sessionStorage.setItem("Comandas", JSON.stringify(Comandas))
+    dibujarComandas()
+
+
+
 }

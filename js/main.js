@@ -2,7 +2,7 @@ import { comandarPlato } from "./comandas.js"
 
 
 const divPlatos = document.getElementById("platos")
-const divPedidos = document.getElementById("pedidos")
+const divComandas = document.getElementById("comandas")
 
 export let platosDisponibles = JSON.parse(localStorage.getItem("platos"))
 
@@ -37,4 +37,8 @@ export const generarCardsPlatos = (platos) => {
 
     });
 };
+
+
+
+
 

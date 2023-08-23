@@ -1,4 +1,4 @@
-export const platos = [
+export const productos = [
     {
       id: 1,
       nombre: "Sopa de cebolla",
@@ -184,6 +184,6 @@ export const platos = [
   ];
   
   
-  JSON.parse(localStorage.getItem("platos")) || localStorage.setItem("platos", JSON.stringify(platos));
+  JSON.parse(localStorage.getItem("productos")) || localStorage.setItem("productos", JSON.stringify(productos));
   
   

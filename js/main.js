@@ -1,23 +1,21 @@
-import { comandarPlato } from "./comandas.js"
+import { comprarProducto } from "./comandas.js"
 
+const divProductos = document.getElementById("productos")
 
-const divPlatos = document.getElementById("platos")
-const divComandas = document.getElementById("comandas")
-
-export let platosDisponibles = JSON.parse(localStorage.getItem("platos"))
+export let productosDisponibles = JSON.parse(localStorage.getItem("productos"))
 
 document.addEventListener("DOMContentLoaded",() => {
-    generarCardsPlatos(platosDisponibles)
+    generarCardsProductos(productosDisponibles)
 })
 
-export const generarCardsPlatos = (platos) => {
-    divPlatos.innerHTML = "";
-    platos.forEach((platos) => {
+export const generarCardsProductos = (productos) => {
+    divProductos.innerHTML = "";
+    productos.forEach((producto) => {
         
-        const { imagen, nombre, categoria, precio, id} = platos
+        const { imagen, nombre, categoria, precio, id} = producto
 
         let card = document.createElement("div")
-        card.className = "platos"
+        card.className = "producto"
         card.innerHTML = `
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="${imagen}" alt="Card image cap">
@@ -29,10 +27,10 @@ export const generarCardsPlatos = (platos) => {
             </div>
         </div>`
         
-        divPlatos.appendChild(card);
+        divProductos.appendChild(card);
 
-        const btnComandas = document.getElementById(`boton${platos.id}`)
-        btnComandas.addEventListener("click", () => comandarPlato(id))
+        const btnComprar = document.getElementById(`boton${id}`)
+        btnComprar.addEventListener("click", () => comprarProducto(id))
 
     });
 };

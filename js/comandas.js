@@ -14,7 +14,8 @@ const btnComandas = document.getElementById("btnComandas");
 const comandasTable = document.getElementById("comandas");
 
 btnComandas.addEventListener("click", () => {
-    if(comandasTable.style.display ==="block") {
+    
+    if(comandasTable.style.display === "block") {
         comandasTable.style.display = "none";
     }else{
         comandas.Table.display = "block";
@@ -27,7 +28,7 @@ export const comandarPlato = (idPlato) => {
     
     const plato = platosDisponibles.find((plato) => plato.id === idPlato);
 
-    const { nombre, precio, imagen, id} = plato;
+    const { nombre, precio, imagen, id, categoria} = plato;
 
     const platoComandas = platos.find((plato) => plato.id ===idPlato);
 
@@ -37,20 +38,22 @@ export const comandarPlato = (idPlato) => {
             nombre: nombre,
             precio: precio,
             imagen: imagen,
+            categoria: categoria,
             cantidad: 1,
         }
         comandas.push(nuevoPlatoComandas)
-        sessionStorage.setItem("comandas",JSON.stringify(comandas))
+        sessionStorage.setItem("platoComandas",JSON.stringify(platoComandas))
     }else{
-        const indexPlatoComandas = platos.findIndex((plato) => plato.id === idPlato)
-        platos[indexPlatoComandas].cantidad++
-        platos[indexPlatoComandas].precio = precio * platos[indexPlatoComandas].cantidad
+        const indexPlatoComandas = platos.findIndex((plato) => plato.id === idPlato);
+        platos[indexPlatoComandas].cantidad++;
+        platos[indexPlatoComandas].precio = precio * platos[indexPlatoComandas].cantidad;
 
-        sessionStorage.setItem("comandas",JSON.stringify(comandas))
+        sessionStorage.setItem("platoComandas",JSON.stringify(platoComandas));
     }
-    comandas = JSON.parse(sessionStorage.getItem("comandas"))
+    comandas = JSON.parse(sessionStorage.getItem("platoComandas"))
 
-    alert(`Agregamos ${nombre} a la orden`)
+    alert(`Agregamos ${nombre} a la orden`);
+    console.log(platoComandas);
 };
 
 const dibujarComandas = () => {
@@ -59,7 +62,7 @@ const dibujarComandas = () => {
         
     });(plato => {
         
-        listaComandas.innerHTML = ''
+        listaComandas.innerHTML = '';
         
         const { imagen, nombre, cantidad, precio, id } = plato;
 
@@ -68,18 +71,18 @@ const dibujarComandas = () => {
         body.className = "plato__comandas";
 
         body.innerHTML = `
-        <th><img id="fotoPlatoComandas" src= "${imagen} class="card-img-top"</th>
-        <td>${nombre}</td>
-        <td>${cantidad}</td>
-        <td>${precio / cantidad}</td>
-        <td>${precio}</td>
+        <th><img id="fotoPlatoComandas" src= "${imagen} class="card-img-top"</th>;
+        <td>${nombre}</td>;
+        <td>${cantidad}</td>;
+        <td>${precio / cantidad}</td>;
+        <td>${precio}</td>;
         <td>
-            <button id="+${id}" class="btn btn-success">+</button>
-            <button id="-${id}" class="btn btn-danger">-</button>
+            <button id="+${id}" class="btn btn-success">+</button>;
+            <button id="-${id}" class="btn btn-danger">-</button>;
         </td>
         `
 
-        listaComandas.append(body)
+        listaComandas.append(body);
 
         const btnAgregar = document.getElementById(`+${id}`)
         const btnRestar = document.getElementById(`-${id}`)
@@ -89,7 +92,7 @@ const dibujarComandas = () => {
 
     });
 
-    dibujarFooter()
+    
 
     const dibujarFooter = () => {
         if(comandas.length >0) {
@@ -110,10 +113,11 @@ const dibujarComandas = () => {
             footComandas.innerHTML = "<h3>No hay platos pendientes de ordenar</h3>"
         }
     }
+    dibujarFooter()
 }
 
 const generarTotales = () => {
-    const costoTotal = comdandas.reduce((total, { precio }) => total + precio, 0)
+    const costoTotal = comandas.reduce((total, { precio }) => total + precio, 0)
     const cantidadTotal = comandas.reduce((total, {cantidad}) => total + cantidad, 0)
 
     return {
@@ -123,29 +127,29 @@ const generarTotales = () => {
 }
 
 const aumentarCantidad = (id) => {
-    const indexProductoComandas = Comandas.findIndex((producto) => producto.id === id)
-    const precio = Comandas[indexProductoComandas].precio / Comandas[indexProductoComandas].cantidad
+    const indexProductoComandas = comandas.findIndex((producto) => producto.id === id)
+    const precio = comandas[indexProductoComandas].precio / comandas[indexProductoComandas].cantidad
 
-    Comandas[indexProductoComandas].cantidad++
-    Comandas[indexProductoComandas].precio = precio*Comandas[indexProductoComandas].cantidad
+    comandas[indexProductoComandas].cantidad++
+    comandas[indexProductoComandas].precio = precio*comandas[indexProductoComandas].cantidad
 
-    sessionStorage.setItem("Comandas", JSON.stringify(Comandas))
+    sessionStorage.setItem("comandas", JSON.stringify(comandas))
     dibujarComandas()
 
 }
 
 const restarCantidad = (id) => {
-    const indexProductoComandas = Comandas.findIndex((producto) => producto.id === id)
-    const precio = Comandas[indexProductoComandas].precio / Comandas[indexProductoComandas].cantidad
+    const indexProductoComandas = comandas.findIndex((producto) => producto.id === id)
+    const precio = comandas[indexProductoComandas].precio / comandas[indexProductoComandas].cantidad
 
-    Comandas[indexProductoComandas].cantidad--
-    Comandas[indexProductoComandas].precio = precio*Comandas[indexProductoComandas].cantidad
+    comandas[indexProductoComandas].cantidad--
+    comandas[indexProductoComandas].precio = precio*comandas[indexProductoComandas].cantidad
 
-    if(Comandas[indexProductoComandas].cantidad === 0){
-        Comandas.splice(indexProductoComandas, 1)
+    if(comandas[indexProductoComandas].cantidad === 0){
+        comandas.splice(indexProductoComandas, 1)
     }
 
-    sessionStorage.setItem("Comandas", JSON.stringify(Comandas))
+    sessionStorage.setItem("Comandas", JSON.stringify(comandas))
     dibujarComandas()
 
 

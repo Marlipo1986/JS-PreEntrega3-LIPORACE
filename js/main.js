@@ -12,28 +12,27 @@ document.addEventListener("DOMContentLoaded",() => {
 
 export const generarCardsPlatos = (platos) => {
     divPlatos.innerHTML = "";
-    
-    platos.forEach((plato) => {
-
-    const { imagen, nombre, categoria, precio, id} = plato
+    platos.forEach((platos) => {
+        
+        const { imagen, nombre, categoria, precio, id} = platos
 
         let card = document.createElement("div")
-        card.className = "plato"
+        card.className = "platos"
         card.innerHTML = `
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="${imagen}" alt="Card image cap">
             <div class="card-body">
-            <h5 class="card-title">${nombre}</h5>
-            <p class="card-text">${categoria}</p>
-            <p class="card-text">$${precio}</p>
-            <button id="boton${id}" class="btn btn-primary">Comprar</button>
+                <h5 class="card-title">${nombre}</h5>
+                <p class="card-text">${categoria}</p>
+                <p class="card-text">$${precio}</p>
+                <button id="boton${id}" class="btn btn-primary">Comprar</button>
             </div>
         </div>`
         
         divPlatos.appendChild(card);
 
-        const btnComprar = document.getElementById(`boton${plato.id}`)
-        btnComprar.addEventListener("click", () => comandarPlato(id))
+        const btnComandas = document.getElementById(`boton${platos.id}`)
+        btnComandas.addEventListener("click", () => comandarPlato(id))
 
     });
 };

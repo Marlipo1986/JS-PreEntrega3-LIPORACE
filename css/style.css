@@ -1,5 +1,15 @@
 #filter__input{
     display: block;
     margin: auto;
-    width: 40%;
+    width: 50%;
+}
+
+/* .general{
+    display: flex;
+    margin: auto;
+    width: 50%;
+} */
+
+#btnComandas {
+    margin-right: 20px
 }

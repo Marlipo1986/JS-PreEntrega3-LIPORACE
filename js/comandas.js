@@ -14,14 +14,15 @@ const btnCarrito = document.getElementById("btnCarrito");
 const carritoTable = document.getElementById("carrito");
 
 
-btnCarrito.addEventListener("click", () => {
-    if (carritoTable.style.display === "block") {
-        carritoTable.style.display = "none";
-    } else {
-        carrito.style.display = "block";
-        dibujarCarrito();
+btnCarrito.addEventListener(onclick, () => {    
+    if(carritoTable.style.display === "block"){
+        carritoTable.style.display = "none"
+    }else{
+        carritoTable.style.display = "block"
+        dibujarCarrito()
     }
-});
+    
+    })
 
 
 export const comprarProducto = (idProducto) => {
@@ -55,6 +56,27 @@ export const comprarProducto = (idProducto) => {
 
     alert(`Agregamos ${nombre} a la orden`);
 };
+
+const dibujarFooter = () => {
+    if(carrito.length >0) {
+        footCarrito.innerHTML = ""
+
+        let footer = document.createElement("tr")
+
+        footer.innerHTML = `
+        <th><b>Totales: </b></th>
+        <td></td>
+        <td>${generarTotales().cantidadTotal}</td>
+        <td></td>
+        <td>${generarTotales().costoTotal}</td>
+        `
+
+        footCarrito.append(footer)
+    }else{
+        footCarrito.innerHTML = "<h3>No hay platos pendientes de ordenar</h3>"
+    }
+}
+
 
 const dibujarCarrito = () => {
       
@@ -90,30 +112,9 @@ const dibujarCarrito = () => {
 
         dibujarFooter()
     });
+}   
 
     
-
-    const dibujarFooter = () => {
-        if(carrito.length >0) {
-            footCarrito.innerHTML = ""
-
-            let footer = document.createElement("tr")
-
-            footer.innerHTML = `
-            <th><b>Totales: </b></th>
-            <td></td>
-            <td>${generarTotales().cantidadTotal}</td>
-            <td></td>
-            <td>${generarTotales().costoTotal}</td>
-            `
-
-            footCarrito.append(footer)
-        }else{
-            footCarrito.innerHTML = "<h3>No hay platos pendientes de ordenar</h3>"
-        }
-    }
-    //dibujarFooter()
-}
 
 const generarTotales = () => {
     const costoTotal = carrito.reduce((total, { precio }) => total + precio, 0)

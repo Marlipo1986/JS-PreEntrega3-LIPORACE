@@ -2,7 +2,7 @@ export const productos = [
     {
       id: 1,
       nombre: "Sopa de cebolla",
-      precio: 150,
+      precio: 250,
       imagen:"https://images.hola.com/imagenes/cocina/recetas/20191115153963/sopa-cebolla-gratinada-queso/0-745-600/sopa-cebolla-adobe-t.jpg?tx=w_1200",
       categoria:"Entradas"
     },
@@ -184,6 +184,6 @@ export const productos = [
   ];
   
   
-  JSON.parse(localStorage.getItem("productos")) || localStorage.setItem("productos", JSON.stringify(productos));
+  JSON.parse(localStorage.getItem("productos")) && localStorage.setItem("productos", JSON.stringify(productos));
   
   

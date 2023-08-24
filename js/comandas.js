@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded",() => {
     dibujarCarrito()
 });
 
-let carrito = JSON.parse(sessionStorage.getItem("carrito")) || [];
+let carrito = JSON.parse(sessionStorage.getItem("carrito"));
 
 const listaCarrito = document.getElementById("items");
 const footCarrito = document.getElementById("totales");
@@ -14,11 +14,16 @@ const btnCarrito = document.getElementById("btnCarrito");
 const carritoTable = document.getElementById("carrito");
 
 
-btnCarrito.addEventListener(onclick, () => {    
-    if(carritoTable.style.display === "block"){
+btnCarrito.addEventListener("click", () => {
+    
+    dibujarCarrito()    
+
+    if(carritoTable.style.display === "table"){
         carritoTable.style.display = "none"
+    
     }else{
-        carritoTable.style.display = "block"
+        
+        carritoTable.style.display = "table"
         dibujarCarrito()
     }
     
@@ -57,48 +62,26 @@ export const comprarProducto = (idProducto) => {
     alert(`Agregamos ${nombre} a la orden`);
 };
 
-const dibujarFooter = () => {
-    if(carrito.length >0) {
-        footCarrito.innerHTML = ""
-
-        let footer = document.createElement("tr")
-
-        footer.innerHTML = `
-        <th><b>Totales: </b></th>
-        <td></td>
-        <td>${generarTotales().cantidadTotal}</td>
-        <td></td>
-        <td>${generarTotales().costoTotal}</td>
-        `
-
-        footCarrito.append(footer)
-    }else{
-        footCarrito.innerHTML = "<h3>No hay platos pendientes de ordenar</h3>"
-    }
-}
-
-
 const dibujarCarrito = () => {
       
         listaCarrito.innerHTML = '';
         
         carrito.forEach(producto => {
 
-        const { imagen, nombre, cantidad, precio, id } = producto;
+        const { imagen, nombre, cantidad, precio, id, categoria } = producto;
 
         let body = document.createElement("tr");
         
         body.className = "producto__carrito";
 
         body.innerHTML = `
-        <th><img id="fotoProductoCarrito" src= "${imagen} class="card-img-top"</th>;
-        <td>${nombre}</td>;
-        <td>${cantidad}</td>;
-        <td>${precio / cantidad}</td>;
-        <td>${precio}</td>;
+        <td>${nombre}</td>
+        <td>${cantidad}</td>
+        <td>${precio / cantidad}</td>
+        <td>${precio}</td>
         <td>
-            <button id="+${id}" class="btn btn-success">+</button>;
-            <button id="-${id}" class="btn btn-danger">-</button>;
+            <button id="+${id}" class="btn btn-success">+</button>
+            <button id="-${id}" class="btn btn-danger">-</button>
         </td>
         `
 
@@ -114,7 +97,24 @@ const dibujarCarrito = () => {
     });
 }   
 
+const dibujarFooter = () => {
+    if(carrito.length >0) {
+        footCarrito.innerHTML = ""
+
+        let footer = document.createElement("tr")
+
+        footer.innerHTML = `
+        <th><b>Totales: </b></th>
+        <td>${generarTotales().cantidadTotal}</td>
+        <td>${generarTotales().costoTotal}</td>
+        `
+
+        footCarrito.append(footer)
+    }else{
+        footCarrito.innerHTML = "<h3>No hay platos pendientes de ordenar</h3>"
     
+    }
+}
 
 const generarTotales = () => {
     const costoTotal = carrito.reduce((total, { precio }) => total + precio, 0)
@@ -152,3 +152,4 @@ const restarCantidad = (id) => {
     sessionStorage.setItem("carrito", JSON.stringify(carrito))
     dibujarCarrito()
 }
+

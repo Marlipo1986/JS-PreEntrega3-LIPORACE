@@ -1,15 +1,27 @@
-#filter__input{
-    display: block;
-    margin: auto;
-    width: 50%;
+
+#carrito {
+    display: none;
+    position: fixed;
+    top: 10%;
+    right: 2%;
+    width: auto;
+    height: auto;
+    background-color: rgb(47, 255, 252);
+    z-index: 1001;
+    border-style: double;
+    text-align: left;
 }
 
-/* .general{
-    display: flex;
-    margin: auto;
-    width: 50%;
-} */
+.navbar{
+    position: fixed;
+}
 
-#btnComandas {
-    margin-right: 20px
+#productos{
+    margin-top: 60px;
+    display: flex;
+    flex-wrap: wrap ;
+}
+
+.card{
+    text-align: center;
 }

@@ -16,8 +16,9 @@ export const generarCardsProductos = (productos) => {
 
         let card = document.createElement("div")
         card.className = "producto"
+        
         card.innerHTML = `
-        <div class="card" style="width: 18rem;">
+        <div class="card h-100" style="width: 18rem; ">
             <img class="card-img-top" src="${imagen}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">${nombre}</h5>
@@ -34,8 +35,3 @@ export const generarCardsProductos = (productos) => {
 
     });
 };
-
-
-
-
-
